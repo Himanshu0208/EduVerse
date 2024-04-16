@@ -1,21 +1,27 @@
+import {toast} from "react-hot-toast";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { FiMenu } from "react-icons/fi"
-import {useDispatch, useSelector} from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
+import { FiMenu } from "react-icons/fi";
+import { useDispatch, useSelector} from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
+import { logout } from "../redux/slices/AuthSlices";
 export default function HomeLayout({children}) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state?.user?.isLoggedIn);
   const role = useSelector((state) => state?.user?.role)
 
   function handleLogout() {
     // e.preventDefault();
-    console.log("logout");
-    navigate("/")
+    let res = dispatch(logout());
+
+    if(res?.payload?.success) {
+      toast.success("Logged out succesfully")
+      navigate("/");
+    }
   }
 
   function changeWidth() {
@@ -54,7 +60,7 @@ export default function HomeLayout({children}) {
             </li>
             <li><Link to="/">Home</Link></li>
             {isLoggedIn && (
-              <Link to={`${role}/dashboard`}>Dashboard</Link>
+              <li><Link to={`${role}/dashboard`}>Dashboard</Link></li>
             )}
             <li><Link to="/course">Courses</Link></li>
             <li><Link to="/about">About Us</Link></li>
@@ -66,7 +72,7 @@ export default function HomeLayout({children}) {
                     <Link to="/login">Login</Link>
                   </button>
                   <button className="btn-secondary px-4 py-2 font-semibold rounded-md w-full">
-                    <Link to="/login">Sign Up</Link>
+                    <Link to="/signup">Sign Up</Link>
                   </button>
                 </div>
               </li>
@@ -75,7 +81,7 @@ export default function HomeLayout({children}) {
               <li className="absolute bottom-4 w-[90%]">
                 <div className="w-full flex items-center">
                   <button className="btn-primary px-4 py-2 font-semibold rounded-md w-full" onClick={handleLogout}>
-                    <Link to="/login">Logout</Link>
+                    Logout
                   </button>
                 </div>
               </li>

@@ -58,7 +58,7 @@ export const register = async (req, res, next) => {
           user.avatar.secure_url = result.secure_url;
         }
         
-        fs.rm(`uploads/${req.file.filename}`)
+        awaitfs.rm(`uploads/${req.file.filename}`)
 
       } catch (error) {
         return next(new AppError(error.message, 500));
@@ -86,7 +86,6 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const {email, password} = req.body;
-
     if(!email || !password) {
       return next(new AppError("Email and Password are mandatory",400));
     }
