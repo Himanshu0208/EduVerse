@@ -21,8 +21,10 @@ app.use("/test", (req, res) => {
   res.send("server is running");
 })
 
-import userRoutes from "./routes/user.routes.js"
+import userRoutes from "./routes/user.routes.js";
+import courseRoutes from "./routes/course.routes.js";
 app.use("/api/v1/user", userRoutes)
+app.use("/api/v1/course", courseRoutes)
 
 app.all('*', (req, res) => {
   res.status(404).send("OOPS!! yeh glt hole hain")

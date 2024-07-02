@@ -5,9 +5,9 @@ import { BsPersonCircle } from "react-icons/bs";
 import {useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import signup from "../assets/svg/signup.svg"
-import HomeLayout from "../layouts/HomeLayout";
-import { createAccount } from "../redux/slices/AuthSlices";
+import signup from "../../Assets/svg/signup.svg"
+import HomeLayout from "../../Layouts/HomeLayout";
+import { createAccount } from "../../Redux/authSlices";
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ export default function SignUp() {
       !signupData.role
     ) {
       toast.error("Please Fill all the required feild");
+      return;
     }
 
     if(signupData.fullName.length < 3) {
@@ -64,11 +65,13 @@ export default function SignUp() {
     if(
       !signupData.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
     ) {
-      toast.error("Bsdk Baap se BackChodi nahi");
+      toast.error("Please enter correct rmail address");
+      return;
     }
 
     if(!signupData.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)) {
       toast.error("Password should be 8 characters long and contains UpperCase, LowerCase, Number and Symbol");
+      return;
     }
 
     if(
@@ -76,7 +79,8 @@ export default function SignUp() {
       signupData.role === 'TEACHER' || 
       signupData.role === 'ORGANISATION')
     ) {
-      toast.error("Bsdk Baap se BackChodi nahi");
+      toast.error("Please select a role");
+      return;
     }
 
     const formData = new FormData();
@@ -174,7 +178,7 @@ export default function SignUp() {
                 <option value="no value">Choose</option>
                 <option value="STUDENT">Student</option>
                 <option value="TEACHER">Teacher</option>
-                <option value="ORGANIZATION">Organization</option>
+                <option value="ORGANISATION">Organization</option>
               </select>
             </div>
             

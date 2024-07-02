@@ -4,8 +4,8 @@ import { FiMenu } from "react-icons/fi";
 import { useDispatch, useSelector} from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import Footer from "../components/Footer";
-import { logout } from "../redux/slices/AuthSlices";
+import Footer from "../Components/Footer";
+import { logout } from "../Redux/authSlices";
 export default function HomeLayout({children}) {
 
   const dispatch = useDispatch();
@@ -14,8 +14,8 @@ export default function HomeLayout({children}) {
   const isLoggedIn = useSelector((state) => state?.user?.isLoggedIn);
   const role = useSelector((state) => state?.user?.role)
 
-  function handleLogout() {
-    // e.preventDefault();
+  function handleLogout(e) {
+    e.preventDefault();
     let res = dispatch(logout());
 
     if(res?.payload?.success) {
@@ -65,26 +65,32 @@ export default function HomeLayout({children}) {
             <li><Link to="/course">Courses</Link></li>
             <li><Link to="/about">About Us</Link></li>
             <li><Link to="/contact">Contact Us</Link></li>
+            {(role === 'organization' || role === 'teacher') && (
+              <li><Link to="/create-course">Create Course</Link></li>
+            )}
             {!isLoggedIn && (
-              <li className="absolute bottom-4 w-[90%]">
-                <div className="w-full flex items-center">
-                  <button className="btn-primary px-4 py-2 font-semibold rounded-md w-full">
+              <div className="absolute bottom-4 w-[90%]">
+                <div className="w-full flex items-center justify-evenly">
+                  <button className="btn-primary w-5/12 px-4 py-2 font-semibold rounded-md">
                     <Link to="/login">Login</Link>
                   </button>
-                  <button className="btn-secondary px-4 py-2 font-semibold rounded-md w-full">
+                  <button className="btn-secondary w-5/12 px-4 py-2 font-semibold rounded-md ">
                     <Link to="/signup">Sign Up</Link>
                   </button>
                 </div>
-              </li>
+              </div>
             )}
             {isLoggedIn && (
-              <li className="absolute bottom-4 w-[90%]">
-                <div className="w-full flex items-center">
-                  <button className="btn-primary px-4 py-2 font-semibold rounded-md w-full" onClick={handleLogout}>
+              <div className="absolute bottom-4 w-[90%]">
+                <div className="w-full flex items-center justify-evenly">
+                  <button className="btn-primary w-5/12 px-4 py-2 font-semibold rounded-md ">
+                    <Link to="/profile">Profile</Link>
+                  </button>
+                  <button className="btn-secondary w-5/12 px-4 py-2 font-semibold rounded-md " onClick={handleLogout}>
                     Logout
                   </button>
                 </div>
-              </li>
+              </div>
             )}
           </ul>
         </div>

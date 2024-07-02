@@ -58,7 +58,7 @@ export const register = async (req, res, next) => {
           user.avatar.secure_url = result.secure_url;
         }
         
-        awaitfs.rm(`uploads/${req.file.filename}`)
+        await fs.rm(`uploads/${req.file.filename}`)
 
       } catch (error) {
         return next(new AppError(error.message, 500));

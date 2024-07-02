@@ -4,9 +4,9 @@ import {toast} from "react-hot-toast"
 import {useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import login_image from "../assets/svg/login.svg"
-import HomeLayout from "../layouts/HomeLayout";
-import { login } from "../redux/slices/AuthSlices.js";
+import login_image from "../../Assets/svg/login.svg"
+import HomeLayout from "../../Layouts/HomeLayout.jsx";
+import { login } from "../../Redux/authSlices.js";
 
 export default function Login() {
   const dispatch = useDispatch();

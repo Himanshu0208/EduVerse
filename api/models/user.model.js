@@ -27,8 +27,9 @@ const userSchema = new Schema({
 
   role: {
     type: String,
-    enum: ['STUDENT', 'TEACHER', 'ORGANIZATION'],
-    default: 'STUDENT'
+    enum: ['student', 'teacher', 'organisation'],
+    default: 'student',
+    lowercase: true,
   },
 
   courses : {
@@ -66,7 +67,7 @@ userSchema.methods = {
 
   genrateJwtToken: async function() {
     return jwt.sign(
-      {id: this._id, email: this.email, courses: this.courses},
+      {id: this._id, email: this.email, role: this.role , courses: this.courses},
       process.env.JWT_SECRET,
       {expiresIn: process.env.JWT_EXPIRY}
     )
